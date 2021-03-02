@@ -48,7 +48,6 @@ namespace seleniumKurs
             Assert.AreEqual("5", text);
 
             driver.Quit();
-
         }
     }
 }
