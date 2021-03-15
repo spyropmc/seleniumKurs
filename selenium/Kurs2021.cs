@@ -84,12 +84,12 @@ namespace seleniumKurs
         {
             //arrange
             var table = driver.FindElement(By.ClassName("table-responsive"));
-            var row = table.FindElement(By.TagName("tr"));
-            var cell = row[1].FindElement(By.TagName("td"));
+            var row = table.FindElements(By.TagName("tr"));
+            var cell = row[1].FindElements(By.TagName("td"));
             //act
             var secondCell = cell[1];
             //assert
-            Assert.AreEqual("table cell", secondCell.text);
+            Assert.AreEqual("Table cell", secondCell.Text);
         }    
         [Test]
          public void Dropdown()
