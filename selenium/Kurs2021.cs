@@ -8,6 +8,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
 using System.Threading;
 using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Interactions;
 
 namespace seleniumKurs
 {
@@ -29,9 +30,11 @@ namespace seleniumKurs
             //uncomment for test CheckCheckbox
             //driver.Navigate().GoToUrl("https://www.seleniumeasy.com/test/basic-checkbox-demo.html");
             //uncomment fot test: ElementInElement
-            driver.Navigate().GoToUrl("https://www.seleniumeasy.com/test/table-pagination-demo.html");
+            //driver.Navigate().GoToUrl("https://www.seleniumeasy.com/test/table-pagination-demo.html");
             //uncomment for test: Dropdown
             //driver.Navigate().GoToUrl("https://www.seleniumeasy.com/test/basic-select-dropdown-demo.html");
+            //uncomment for test: Dropdown2
+            //driver.Navigate().GoToUrl("https://www.seleniumeasy.com/test/jquery-dropdown-search-demo.html");
             
         }
         [TearDown]
@@ -103,9 +106,73 @@ namespace seleniumKurs
             SelectADay.SelectByValue("Friday");
             var selectedValue1 = SelectADay.SelectedOption;
             var selectValue = driver.FindElement(By.ClassName("selected-value"));
-            var SelectedValueEdited = selectValue.Text.Substring(16);
+            var selectedValueEdited = selectValue.Text.Substring(16);
             //assert
-            Assert.AreEqual("Friday", SelectedValueEdited);
+            Assert.AreEqual("Friday", selectedValueEdited);
+        }
+        [Test]
+        public void Dropdown2()
+        {
+            //arrange
+            var japanString = "Japan";
+            //act
+            var dropdown = driver.FindElement(By.ClassName("selection"));
+            dropdown.Click();
+            var countries = driver.FindElement(By.ClassName("select2-results__options")).FindElements(By.TagName("li"));
+            var japan = countries.Where(d => d.Text == japanString).FirstOrDefault();
+            japan.Click();
+            var selectedCountry = dropdown.Text;
+            //assert
+            Assert.AreEqual(japanString, selectedCountry);
+            Assert.IsTrue(true, japanString = selectedCountry);
+            Assert.That(japanString == selectedCountry);
+
+        }
+        [Test]
+        public void ImplicitWait()
+        {
+            driver.Navigate().GoToUrl("https://www.seleniumeasy.com/test/basic-first-form-demo.html");
+            //arrange
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
+            wait.Until(d => d.FindElement(By.Id("at-cv-lightbox-close")));
+            //act
+            var xOnPopup = driver.FindElement(By.Id("at-cv-lightbox-close"));
+            xOnPopup.Click();
+        }
+        [Test]
+        public void DragAndDrop()
+        {
+            driver.Navigate().GoToUrl("https://www.globalsqa.com/demo-site/draganddrop/");
+            //arrange
+            var frame = driver.FindElement(By.ClassName("demo-frame"));
+            driver.SwitchTo().Frame(frame);
+            var image1 = driver.FindElements(By.ClassName("ui-draggable")).FirstOrDefault();
+            var trash = driver.FindElement(By.Id("trash"));
+            //act
+            var action = new Actions(driver);
+            action.DragAndDrop(image1, trash).Build().Perform();
+            //assert
+            var trashAfterMove = trash.FindElements(By.TagName("img"));
+            Assert.That(trashAfterMove.Count == 1);
+            driver.SwitchTo().DefaultContent();
+        }
+        [Test]
+        public void NewTab()
+        {
+            driver.Navigate().GoToUrl("https://www.seleniumeasy.com/test/table-pagination-demo.html");
+            //arrange
+            var link = driver.FindElement(By.ClassName("cbt"));
+            link.Click();
+            //act
+            var windowHandlesAfter = driver.WindowHandles;
+            driver.SwitchTo().Window(driver.WindowHandles.Last());
+            var titleAfter = driver.Title;
+            driver.Close();
+            driver.SwitchTo().Window(driver.WindowHandles.Last());
+            var titleSecond = driver.Title;
+            //assert
+            Assert.AreEqual("Cross Browser Testing Tool: 2050+ Real Browsers & Devices", titleAfter);
+            Assert.AreEqual("Selenium Easy - Table with Pagination Demo", driver.Title);
         }
     }
 }
