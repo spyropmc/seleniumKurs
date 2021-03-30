@@ -39,11 +39,13 @@ namespace seleniumKurs
             //driver.Navigate().GoToUrl("https://www.seleniumeasy.com/test/jquery-dropdown-search-demo.html");
             
         }
+
         [TearDown]
         public void TearDown()
         {
             driver.Quit();
         }
+
         [Test]
         public void CheckInput()
         {
@@ -58,6 +60,7 @@ namespace seleniumKurs
             //assert
             Assert.AreEqual(testText, text);                    
         }
+
         [Test]
         public void AddFields()
         {
@@ -70,6 +73,7 @@ namespace seleniumKurs
             //assert
             Assert.AreEqual("5", text);
         }
+
         [Test]
         public void CheckCheckbox()
         {
@@ -84,6 +88,7 @@ namespace seleniumKurs
             //assert
             Assert.AreEqual("Learn Selenium with Best Practices and Examples | Selenium Easy", driver.Title);
         }
+
         [Test]
         public void ElementInElement()
         {
@@ -95,7 +100,8 @@ namespace seleniumKurs
             var secondCell = cell[1];
             //assert
             Assert.AreEqual("Table cell", secondCell.Text);
-        }    
+        }  
+        
         [Test]
          public void Dropdown()
         {
@@ -112,6 +118,7 @@ namespace seleniumKurs
             //assert
             Assert.AreEqual("Friday", selectedValueEdited);
         }
+
         [Test]
         public void Dropdown2()
         {
@@ -129,6 +136,7 @@ namespace seleniumKurs
             Assert.IsTrue(true, japanString = selectedCountry);
             Assert.That(japanString == selectedCountry);
         }
+
         [Test]
         public void ImplicitWait()
         {
@@ -140,6 +148,7 @@ namespace seleniumKurs
             var xOnPopup = driver.FindElement(By.Id("at-cv-lightbox-close"));
             xOnPopup.Click();
         }
+
         [Test]
         public void DragAndDrop()
         {
@@ -157,6 +166,7 @@ namespace seleniumKurs
             Assert.That(trashAfterMove.Count == 1);
             driver.SwitchTo().DefaultContent();
         }
+
         [Test]
         public void NewTab()
         {
@@ -175,6 +185,7 @@ namespace seleniumKurs
             Assert.AreEqual("Cross Browser Testing Tool: 2050+ Real Browsers & Devices", titleAfter);
             Assert.AreEqual("Selenium Easy - Table with Pagination Demo", driver.Title);
         }
+
         [Test]
         public void DynamicLoading()
         {
@@ -190,6 +201,7 @@ namespace seleniumKurs
             Assert.That(loader.Text.Contains("First Name"));
             Assert.That(loader.Text.Contains("Last Name"));
         }
+
         [Test]
         public void DownloadProgress()
         {
@@ -205,6 +217,7 @@ namespace seleniumKurs
             Assert.That(closeButton.Text.Contains("Close"));
             closeButton.Click();
          }
+
         [Test]
         public void UploadFile()
         {
@@ -224,6 +237,7 @@ namespace seleniumKurs
             //assert
             Assert.That(uploadedFile.Text.Contains(fileName));
         }
+
         [Test]
         public void ClosePrompt()
         {
@@ -249,6 +263,7 @@ namespace seleniumKurs
             //assert
             Assert.That(confirmThird.Text.Contains(inputText));            
         }
+
         [Test]
         public void Screenshot()
         {
